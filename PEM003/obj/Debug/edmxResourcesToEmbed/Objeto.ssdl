@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PEM003Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="detalle">
+    <Key>
+      <PropertyRef Name="idDetalle" />
+    </Key>
+    <Property Name="idDetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="cantidad" Type="int" Nullable="false" />
+    <Property Name="stock" Type="int" Nullable="false" />
+    <Property Name="idVenta" Type="int" Nullable="false" />
+    <Property Name="idProducto" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="producto">
+    <Key>
+      <PropertyRef Name="idProducto" />
+    </Key>
+    <Property Name="idProducto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreProducto" Type="varchar" MaxLength="50" />
+    <Property Name="precioProducto" Type="float" />
+  </EntityType>
+  <EntityType Name="venta">
+    <Key>
+      <PropertyRef Name="idVenta" />
+    </Key>
+    <Property Name="idVenta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fecha" Type="date" Nullable="false" />
+    <Property Name="nombreUsuario" Type="varchar" MaxLength="50" />
+    <Property Name="total" Type="float" />
+  </EntityType>
+  <Association Name="FK__detalle__idProdu__173876EA">
+    <End Role="producto" Type="Self.producto" Multiplicity="1" />
+    <End Role="detalle" Type="Self.detalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="producto">
+        <PropertyRef Name="idProducto" />
+      </Principal>
+      <Dependent Role="detalle">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__detalle__idVenta__164452B1">
+    <End Role="venta" Type="Self.venta" Multiplicity="1" />
+    <End Role="detalle" Type="Self.detalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="venta">
+        <PropertyRef Name="idVenta" />
+      </Principal>
+      <Dependent Role="detalle">
+        <PropertyRef Name="idVenta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PEM003ModelStoreContainer">
+    <EntitySet Name="detalle" EntityType="Self.detalle" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="producto" EntityType="Self.producto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="venta" EntityType="Self.venta" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__detalle__idProdu__173876EA" Association="Self.FK__detalle__idProdu__173876EA">
+      <End Role="producto" EntitySet="producto" />
+      <End Role="detalle" EntitySet="detalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK__detalle__idVenta__164452B1" Association="Self.FK__detalle__idVenta__164452B1">
+      <End Role="venta" EntitySet="venta" />
+      <End Role="detalle" EntitySet="detalle" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

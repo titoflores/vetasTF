@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PEM003Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="detalle">
+    <Key>
+      <PropertyRef Name="idDetalle" />
+    </Key>
+    <Property Name="idDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cantidad" Type="Int32" Nullable="false" />
+    <Property Name="stock" Type="Int32" Nullable="false" />
+    <Property Name="idVenta" Type="Int32" Nullable="false" />
+    <Property Name="idProducto" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="producto" Relationship="Self.FK__detalle__idProdu__173876EA" FromRole="detalle" ToRole="producto" />
+    <NavigationProperty Name="venta" Relationship="Self.FK__detalle__idVenta__164452B1" FromRole="detalle" ToRole="venta" />
+  </EntityType>
+  <EntityType Name="producto">
+    <Key>
+      <PropertyRef Name="idProducto" />
+    </Key>
+    <Property Name="idProducto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreProducto" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="precioProducto" Type="Double" />
+    <NavigationProperty Name="detalle" Relationship="Self.FK__detalle__idProdu__173876EA" FromRole="producto" ToRole="detalle" />
+  </EntityType>
+  <EntityType Name="venta">
+    <Key>
+      <PropertyRef Name="idVenta" />
+    </Key>
+    <Property Name="idVenta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="nombreUsuario" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="total" Type="Double" />
+    <NavigationProperty Name="detalle" Relationship="Self.FK__detalle__idVenta__164452B1" FromRole="venta" ToRole="detalle" />
+  </EntityType>
+  <Association Name="FK__detalle__idProdu__173876EA">
+    <End Role="producto" Type="Self.producto" Multiplicity="1" />
+    <End Role="detalle" Type="Self.detalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="producto">
+        <PropertyRef Name="idProducto" />
+      </Principal>
+      <Dependent Role="detalle">
+        <PropertyRef Name="idProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__detalle__idVenta__164452B1">
+    <End Role="venta" Type="Self.venta" Multiplicity="1" />
+    <End Role="detalle" Type="Self.detalle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="venta">
+        <PropertyRef Name="idVenta" />
+      </Principal>
+      <Dependent Role="detalle">
+        <PropertyRef Name="idVenta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PEM003Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="detalle" EntityType="Self.detalle" />
+    <EntitySet Name="producto" EntityType="Self.producto" />
+    <EntitySet Name="venta" EntityType="Self.venta" />
+    <AssociationSet Name="FK__detalle__idProdu__173876EA" Association="Self.FK__detalle__idProdu__173876EA">
+      <End Role="producto" EntitySet="producto" />
+      <End Role="detalle" EntitySet="detalle" />
+    </AssociationSet>
+    <AssociationSet Name="FK__detalle__idVenta__164452B1" Association="Self.FK__detalle__idVenta__164452B1">
+      <End Role="venta" EntitySet="venta" />
+      <End Role="detalle" EntitySet="detalle" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

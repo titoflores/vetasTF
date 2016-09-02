@@ -1,0 +1,196 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div >
+    <div>
+        nombre :
+        <input type="text" name="name" value=" " ng-model="caja" /><br />{{caja}}
+        Nit :
+        <input type="text" name="name" value=" " /><br />
+        Descripcion :
+        <input type="text" name="name" value=" " />
+
+        @*-----------lista de producto-----------*@
+        <div class="producto"></div>
+        <h3>LISTA DE PRODUCTOS</h3>
+        <table id="tblProductos">
+           
+            <td>Nr.</td>
+            <td>Nombre.</td>
+            <td>Cantidad.</td>
+            <td></td>
+          
+            <tbody></tbody>
+        </table>
+        <div>
+            <input type="button" value="Vender" />
+        </div>
+
+        @*-----------lista de Usuarios-----------*@
+
+        <div class="usuarios">
+            <h3>LISTA DE USUARIOS</h3>
+            <table id="tblUsuarios">
+                <th>
+                <td>Nr.</td>
+                <td>Usuario</td>
+                <td>Clave</td>
+                <td>Estado</td>
+                </th>
+                <tbody></tbody>
+            </table>
+            <div>
+                <input type="button" value="Vender" />
+            </div>
+        </div>
+        @*-----------lista de Categorias-----------*@
+        @*-----------lista de Sucursal-----------*@
+
+        <div class="categoria">
+            <h3>LISTA DE CATEGORIAS</h3>
+            <table id="tblCategorias">
+                <td>Nr.</td>
+                <td>Nombre de Categoria</td>
+                <td>Descripcion de Categoria</td>
+                <td>Estado</td>
+                <tbody></tbody>
+            </table>
+            <div>
+                <input type="button" value="Vender" />
+            </div>
+        </div>
+
+
+        @*-----------lista de Sucursal-----------*@
+
+        <div class="categoria">
+            <h3>LISTA DE SUCURSAL</h3>
+            <table id="tblSucursal">
+                <td>Nr.</td>
+                <td>Nombre de Sucursal</td>
+                <td>Direccion</td>
+                <td>Telefono</td>
+                <tbody></tbody>
+            </table>
+            <div>
+                <input type="button" value="Vender" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    
+    cargarProductos();
+    function cargarProductos() {
+        datos = '';
+        debugger;
+        $.ajax({
+            url: '/Home/ObtenerProductos',
+            type: 'GET',
+            data: null,
+            success: function (data) {
+                debugger;
+                cargarTablaProductos(data);
+            }
+        });
+    }
+    function cargarTablaProductos(productos) {
+        debugger;
+        var cont = 1;
+        var i = 0;
+        while (i < productos.length) {
+            debugger
+            $('#tblProductos').append('<tr><td>' + cont++ + '</td><td>' + productos[i].nombreProducto
+                + '</td><td>' + productos[i].precioProducto + '</td><td><input type="button" name="name" value="Vender" /></td></tr>');
+            debugger
+            i++;
+        }
+    }
+    cargarUsuarios();
+    function cargarUsuarios() {
+        datos = '';
+        debugger;
+        $.ajax({
+            url: '/Home/ObtenerUsuarios',
+            type: 'GET',
+            data: null,
+            success: function (data) {
+                debugger;
+                cargarTablaUsuario(data);
+            }
+        });
+    }
+
+    function cargarTablaUsuario(usuario) {
+        debugger;
+        var cont = 1;
+        var i = 0;
+        while (i < usuario.length) {
+            debugger
+            $('#tblUsuarios').append('<tr><td>' + cont++ + '</td><td>' + usuario[i].nombreUsuario
+                + '</td><td>' + usuario[i].claveUsuario + '</td><td>' + usuario[i].estadoUsuario + '</td><td><input type="button" name="name" value="Editar" /></td></tr>');
+            debugger
+            i++;
+        }
+    }
+
+    cargarCategorias();
+    function cargarCategorias() {
+        datos = '';
+        debugger;
+        $.ajax({
+            url: '/Home/ObtenerCategorias',
+            type: 'GET',
+            data: null,
+            success: function (data) {
+                debugger;
+                cargarTablaCategorias(data);
+            }
+        });
+    }
+
+    function cargarTablaCategorias(categoria) {
+        debugger;
+        var cont = 1;
+        var i = 0;
+        while (i < categoria.length) {
+            debugger
+            $('#tblCategorias').append('<tr><td>' + cont++ + '</td><td>' + categoria[i].nombreCategoria
+                + '</td><td>' + categoria[i].descripcion + '</td><td>' + categoria[i].estado + '</td><td><input type="button" name="name" value="Editar" /></td></tr>');
+            debugger
+            i++;
+        }
+    }
+
+    cargarSucursal();
+    function cargarSucursal() {
+        datos = '';
+        debugger;
+        $.ajax({
+            url: '/Home/ObtenerSucursal',
+            type: 'GET',
+            data: null,
+            success: function (data) {
+                debugger;
+                cargarTablaSucursal(data);
+            }
+        });
+    }
+
+    function cargarTablaSucursal(sucursal) {
+        debugger;
+        var cont = 1;
+        var i = 0;
+        while (i < sucursal.length) {
+            debugger
+            $('#tblSucursal').append('<tr><td>' + cont++ + '</td><td>' + sucursal[i].nombreSucursal
+                + '</td><td>' + sucursal[i].direccion + '</td><td>' + sucursal[i].telefono + '</td><td><input type="button" name="name" value="Editar" /></td></tr>');
+            debugger
+            i++;
+        }
+    }
+   
+    
+</script>
